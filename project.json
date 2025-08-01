@@ -1,0 +1,95 @@
+{
+  "name": "collector",
+  "root": "apps/collector",
+  "sourceRoot": "apps/collector",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "inputs": ["go"],
+      "options": {
+        "command": "make otelcontribcol",
+        "cwd": "apps/collector"
+      },
+      "outputs": ["{workspaceRoot}/apps/collector/bin/otelcontribcol_*"]
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "inputs": ["go"],
+      "options": {
+        "command": "make gotest",
+        "cwd": "apps/collector"
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "inputs": ["go"],
+      "options": {
+        "command": "make golint",
+        "cwd": "apps/collector"
+      }
+    },
+    "fmt": {
+      "executor": "nx:run-commands",
+      "inputs": ["go"],
+      "options": {
+        "command": "make gofmt",
+        "cwd": "apps/collector"
+      }
+    },
+    "mod-tidy": {
+      "executor": "nx:run-commands",
+      "inputs": ["go"],
+      "options": {
+        "command": "make gotidy",
+        "cwd": "apps/collector"
+      }
+    },
+    "generate": {
+      "executor": "nx:run-commands",
+      "inputs": ["go"],
+      "options": {
+        "command": "make generate",
+        "cwd": "apps/collector"
+      }
+    },
+    "docker-build": {
+      "executor": "nx:run-commands",
+      "inputs": ["go"],
+      "options": {
+        "command": "docker build -f cmd/otelcontribcol/Dockerfile -t otelcontribcol .",
+        "cwd": "apps/collector"
+      }
+    },
+    "run": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "make run RUN_CONFIG=../../configs/local/otel-collector-config.yaml",
+        "cwd": "apps/collector"
+      }
+    },
+    "dev": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "options": {
+        "command": "make run RUN_CONFIG=../../configs/local/otel-collector-config.yaml",
+        "cwd": "apps/collector"
+      }
+    },
+    "run-with-config": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "make run RUN_CONFIG={args.config}",
+        "cwd": "apps/collector"
+      }
+    },
+    "clean": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "make clean",
+        "cwd": "apps/collector"
+      }
+    }
+  },
+  "tags": ["type:application", "platform:go", "scope:otel"]
+}
