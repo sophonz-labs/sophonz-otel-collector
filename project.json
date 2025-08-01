@@ -72,8 +72,10 @@
       "executor": "nx:run-commands",
       "dependsOn": ["build"],
       "options": {
-        "command": "make run RUN_CONFIG=../../configs/local/otel-collector-config.yaml",
-        "cwd": "apps/collector"
+        "command": "./dev-wrapper.sh ../../../../configs/local/otel-collector-config.yaml",
+        "cwd": "apps/collector",
+        "forwardAllArgs": false,
+        "parallel": false
       }
     },
     "run-with-config": {
